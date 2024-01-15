@@ -1,3 +1,4 @@
+// Définition du plugin jQuery "mauGallery" avec des méthodes pour créer un wrapper de ligne (grid), une lightbox (modale), et des listeners pour la galerie d'images.
 (function ($) {
   $.fn.mauGallery = function (options) {
     var options = $.extend($.fn.mauGallery.defaults, options);
@@ -13,6 +14,7 @@
       }
       $.fn.mauGallery.listeners(options);
 
+      // Organisation des éléments de la galerie d'images et gestion des tags associés.
       $(this)
         .children(".gallery-item")
         .each(function (index) {
@@ -29,6 +31,7 @@
           }
         });
 
+      // Affiche les tags de la galerie d'images et applique un effet de fondu à l'élément actuel.
       if (options.showTags) {
         $.fn.mauGallery.methods.showItemTags(
           $(this),
@@ -40,6 +43,8 @@
       $(this).fadeIn(500);
     });
   };
+
+  // Définit les valeurs par défaut pour les options du plugin "mauGallery". (nb de colonnes, lightbox, tags, position, etc.)
   $.fn.mauGallery.defaults = {
     columns: 3,
     lightBox: true,
@@ -48,6 +53,8 @@
     tagsPosition: "bottom",
     navigation: true,
   };
+
+  // Définit les écouteurs d'événements pour les interactions avec la galerie.
   $.fn.mauGallery.listeners = function (options) {
     $(".gallery-item").on("click", function () {
       if (options.lightBox && $(this).prop("tagName") === "IMG") {
@@ -65,6 +72,8 @@
       $.fn.mauGallery.methods.nextImage(options.lightboxId)
     );
   };
+
+  // Crée un wrapper de ligne (grid) et enveloppe un élément dans une colonne en fonction du nombre de colonnes spécifié.
   $.fn.mauGallery.methods = {
     createRowWrapper(element) {
       if (!element.children().first().hasClass("row")) {
@@ -100,6 +109,8 @@
         );
       }
     },
+
+    // Déplace un élément dans le wrapper de ligne, rend une image réactive et ouvre une lightbox en mettant à jour l'image source.
     moveItemInRowWrapper(element) {
       element.appendTo(".gallery-items-row");
     },
@@ -114,6 +125,8 @@
         .attr("src", element.attr("src"));
       $(`#${lightboxId}`).modal("toggle");
     },
+
+    // Gère la navigation dans la lightbox.
     prevImage() {
       let activeImage = null;
       $("img.gallery-item").each(function () {
@@ -184,6 +197,8 @@
       next = imagesCollection[index] || imagesCollection[0];
       $(".lightboxImage").attr("src", $(next).attr("src"));
     },
+
+    // Crée une lightbox (modale) avec des boutons de navigation.
     createLightBox(gallery, lightboxId, navigation) {
       gallery.append(`<div class="modal fade" id="${
         lightboxId ? lightboxId : "galleryLightbox"
@@ -207,6 +222,8 @@
                 </div>
             </div>`);
     },
+
+    // Affiche les tags de la galerie d'images et applique un effet de fondu à l'élément actuel.
     showItemTags(gallery, position, tags) {
       var tagItems =
         '<li class="nav-item"><span class="nav-link active active-tag"  data-images-toggle="all">Tous</span></li>';
@@ -229,7 +246,7 @@
         return;
       }
       $(".active-tag").removeClass("active active-tag");
-      $(this).addClass("active-tag");
+      $(this).addClass("active active-tag");
 
       var tag = $(this).data("images-toggle");
 
