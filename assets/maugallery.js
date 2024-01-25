@@ -157,6 +157,8 @@
           index = i;
         }
       });
+
+      // Ajout de la décrémentation de l'index
       index--;
       next =
         imagesCollection[index] ||
@@ -193,6 +195,7 @@
           index = i;
         }
       });
+      // Ajout de l'incrémentation de l'index
       index++;
       next = imagesCollection[index] || imagesCollection[0];
       $(".lightboxImage").attr("src", $(next).attr("src"));
@@ -246,6 +249,7 @@
         return;
       }
       $(".active-tag").removeClass("active active-tag");
+      // Ajout de la classe active
       $(this).addClass("active active-tag");
 
       var tag = $(this).data("images-toggle");
